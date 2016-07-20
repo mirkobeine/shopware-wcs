@@ -154,7 +154,7 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Models_Seamless
     protected function getPluginVersion()
     {
         return WirecardCEE_QMore_FrontendClient::generatePluginVersion(
-            'Shopware',
+            'ShopwareCore',
             Shopware()->Config()->sVERSION,
             Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap::NAME,
             Shopware()->WirecardCheckoutSeamless()->Config()->getPluginVersion()
