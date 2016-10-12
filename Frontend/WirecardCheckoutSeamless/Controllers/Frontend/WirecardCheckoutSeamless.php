@@ -90,6 +90,9 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
             $this->View()->loadTemplate('frontend/checkout/wirecard_seamless.tpl');
         }
 
+        $headerStyle = Shopware()->WirecardCheckoutSeamless()->Config()->WIRECARD_CONFIRM_HEADER_STYLE;
+        $headerTemplate = $headerStyle == 1 ? 'frontend/index/index.tpl' : 'frontend/checkout/confirm.tpl';
+        $this->View()->assign('headerTemplate', $headerTemplate);
         $this->View()->assign('saveOrderUrl', $this->Front()->Router()->assemble(Array('action' => 'saveOrder', 'sUseSSL' => true)));
         $this->View()->assign('checkoutConfirmUrl', $this->Front()->Router()->assemble(Array('controller' => 'checkout', 'action' => 'confirm', 'sUseSSL' => true)));
     }
@@ -143,6 +146,9 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
             'confirm' => $confirmUrl
         );
 
+        if(strlen($_SESSION["wcs_redirect_url"]))
+            die(json_encode(array('redirectUrl' => $_SESSION["wcs_redirect_url"], 'useIframe' => true)));
+
         // Set customer data like name, address
         $response = Shopware()->WirecardCheckoutSeamless()->Seamless()->getResponse(
             $paymentType,
@@ -176,7 +182,7 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
             );
             die($dataFail);
         }
-
+        $_SESSION["wcs_redirect_url"] = $response->getRedirectUrl();
         die(json_encode(array('redirectUrl' => $response->getRedirectUrl(), 'useIframe' => true)));
     }
 
@@ -257,6 +263,43 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
 
             $update['state'] = strtolower($return->getPaymentState());
 
+            // data for confirm mail
+            $sOrderVariables = Shopware()->Session()->sOrderVariables;
+            $userData = Shopware()->Session()->sOrderVariables['sUserData'];
+            $basketData = Shopware()->Session()->sOrderVariables['sBasket'];
+
+            $shop = Shopware()->Shop();
+            $mainShop = $shop->getMain() !== null ? $shop->getMain() : $shop;
+            $details = $basketData['content'];
+
+            $context = array(
+                'sOrderDetails' => $details,
+                'billingaddress'  => $userData['billingaddress'],
+                'shippingaddress' => $userData['shippingaddress'],
+                'additional'      => $userData['additional'],
+
+                'sShippingCosts' => $sOrderVariables['sShippingcosts'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency(),
+                'sAmount'        => $sOrderVariables['sAmount'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency(),
+                'sAmountNet'     => $sOrderVariables['sAmountNet'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency(),
+                'sDispatch'      => $sOrderVariables['sDispatch'],
+
+                'sOrderNumber' => $sOrderVariables['sOrderNumber'],
+                'sComment'     => $sOrderVariables['sComment'],
+                'sCurrency'    => Shopware()->Shop()->getCurrency()->getCurrency(),
+                'sLanguage'    => $shop->getId(),
+
+                'sSubShop'     => $mainShop->getId(),
+                'sNet'    => !$userData['additional']['show_net'],
+                'sEsd'     => $userData['additional']['payment']['esdactive'],
+                'sTaxRates'      => $sOrderVariables['sTaxRates'],
+            );
+
+            $sUser = array (
+                'billing_salutation' => $userData['billingaddress']['salutation'],
+                'billing_firstname' => $userData['billingaddress']['firstname'],
+                'billing_lastname' => $userData['billingaddress']['lastname']
+            );
+
             switch ($return->getPaymentState()) {
 
                 case WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS:
@@ -264,19 +307,41 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
 
                     $update['orderNumber'] = $return->getOrderNumber();
                     $update['session'] = '';
+                    $context['sOrderDay'] = date("d.m.Y");
+                    $context['sOrderTime'] = date("H:i");
 
+                    $orderNumber = 0;
                     // pending url, we already have an order id, just update the payment state
                     if ($data['orderId']) {
                         $this->savePaymentStatus(
                             $data['transactionId'],
                             $paymentUniqueId,
                             Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('success'),
-                            true
+                            false
                         );
+                        //never send mail automatic
                         $orderId = $data['orderId'];
+                        $context['sOrderNumber'] = $data['orderId'];
+                        $context['sShippingCosts'] = $sOrderVariables['sShippingcosts'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency();
+                        $context['sAmount'] = $sOrderVariables['sAmount'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency();
+                        $context['sAmountNet'] = $sOrderVariables['sAmountNet'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency();
+                        $context['sCurrency'] = Shopware()->Shop()->getCurrency()->getCurrency();
+
+
+                        // Sending confirm mail for successfull order after pending
+                        $mail = Shopware()->TemplateMail()->createMail('sORDER', $context);
+                        $mail->addTo($userData['additional']['user']['email']);
+
+                        try {
+                            $mail->send();
+                        } catch (\Exception $e) {
+                            $variables = Shopware()->Session()->offsetGet('sOrderVariables');
+                            $variables['sOrderNumber'] = $context['sOrderNumber'];
+                            $variables['confirmMailDeliveryFailed'] = true;
+                            Shopware()->Session()->offsetSet('sOrderVariables', $variables);
+                        }
                     }
                     else {
-
                         $site = Shopware()->Shop();
                         $repository = Shopware()->Models()->getRepository('Shopware\Models\Shop\Currency');
                         if (($currency = $this->Request()->getParam('__currency')) !== null) {
@@ -287,9 +352,30 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
                         $update['orderId'] = $this->saveOrder(
                             $transactionId,
                             $paymentUniqueId,
-                            Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('success')
+                            Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('success'),
+                            false
                         );
                         $orderId = $update['orderId'];
+
+                        $context['sOrderNumber'] = Shopware()->Session()->sOrderVariables['sOrderNumber'];
+
+                        $context['sShippingCosts'] = $sOrderVariables['sShippingcosts'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency();
+                        $context['sAmount'] = $sOrderVariables['sAmount'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency();
+                        $context['sAmountNet'] = $sOrderVariables['sAmountNet'] . ' ' .Shopware()->Shop()->getCurrency()->getCurrency();
+                        $context['sCurrency'] = Shopware()->Shop()->getCurrency()->getCurrency();
+
+                        // Sending confirm mail for successfull order
+                        $mail = Shopware()->TemplateMail()->createMail('sORDER', $context);
+                        $mail->addTo($userData['additional']['user']['email']);
+
+                        try {
+                            $mail->send();
+                        } catch (\Exception $e) {
+                            $variables = Shopware()->Session()->offsetGet('sOrderVariables');
+                            $variables['sOrderNumber'] = $context['sOrderNumber'];
+                            $variables['confirmMailDeliveryFailed'] = true;
+                            Shopware()->Session()->offsetSet('sOrderVariables', $variables);
+                        }
                     }
 
                     if (Shopware()->WirecardCheckoutSeamless()->Config()->saveReturnValues()) {
@@ -317,8 +403,44 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
                         $update['orderId'] = $this->saveOrder(
                             $transactionId,
                             $paymentUniqueId,
-                            Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('pending')
+                            Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('pending'),
+                            false
                         );
+                        //do not send automatic mail for ordercreation
+                        //only send pendingmail if configured
+                        if(Shopware()->WirecardCheckoutSeamless()->Config()->SEND_PENDING_MAILS) {
+                            $existingOrder = Shopware()->Models()->getRepository('Shopware\Models\Order\Order')->findByNumber($sOrderVariables['sOrderNumber']);
+                            $status = $existingOrder[0]->getPaymentStatus();
+
+                            $orderDate = 'dd.mm.yyyy';
+
+                            if($details != null){
+                                $orderDate = $details[0]['datum'];
+                            }
+                            $sOrder = array(
+                                'ordernumber' => $sOrderVariables['sOrderNumber'],
+                                'status_description' => $status->getName(),
+                                'ordertime' => $orderDate
+                            );
+
+                            $pendingContext = array(
+                                'sUser' => $sUser,
+                                'sOrder' => $sOrder
+                            );
+
+                            // Sending confirm mail for successfull order
+                            $mail = Shopware()->TemplateMail()->createMail('sORDERSTATEMAIL1', $pendingContext);
+                            $mail->addTo($userData['additional']['user']['email']);
+
+                            try {
+                                $mail->send();
+                            } catch (\Exception $e) {
+                                $variables = Shopware()->Session()->offsetGet('sOrderVariables');
+                                $variables['sOrderNumber'] = $sOrderVariables['sOrderNumber'];
+                                $variables['confirmMailDeliveryFailed'] = true;
+                                Shopware()->Session()->offsetSet('sOrderVariables', $variables);
+                            }
+                        }
                     }
                     break;
 
@@ -339,12 +461,51 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
                             $this->savePaymentStatus(
                                 $data['transactionId'],
                                 $paymentUniqueId,
-                                Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('failure')
+                                Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('failure'),
+                                false
                             );
                         } else if($existingOrder[0] instanceof \Shopware\Models\Order\Order) {
                             Shopware()->WirecardCheckoutSeamless()->Log()->Debug(__METHOD__ . ': failure: delete order: ' . $data['orderId']);
+                            $this->savePaymentStatus(
+                                $data['transactionId'],
+                                $paymentUniqueId,
+                                Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentStatusId('failure'),
+                                false
+                            );
+
+                            $status = $existingOrder[0]->getPaymentStatus();
+
                             Shopware()->Models()->remove($existingOrder[0]);
                             Shopware()->Models()->flush();
+
+                            $orderDate = 'dd.mm.yyyy';
+
+                            if($details != null){
+                                $orderDate = $details[0]['datum'];
+                            }
+                            $sOrder = array(
+                                'ordernumber' => $sOrderVariables['sOrderNumber'],
+                                'status_description' => $status->getName(),
+                                'ordertime' => $orderDate
+                            );
+
+                            $pendingContext = array (
+                                'sUser' => $sUser,
+                                'sOrder' => $sOrder
+                            );
+
+                            // Sending confirm mail for failed order after pending
+                            $mail = Shopware()->TemplateMail()->createMail('sORDERSTATEMAIL4', $pendingContext);
+                            $mail->addTo($userData['additional']['user']['email']);
+
+                            try {
+                                $mail->send();
+                            } catch (\Exception $e) {
+                                $variables = Shopware()->Session()->offsetGet('sOrderVariables');
+                                $variables['sOrderNumber'] = $context['sOrderNumber'];
+                                $variables['confirmMailDeliveryFailed'] = true;
+                                Shopware()->Session()->offsetSet('sOrderVariables', $variables);
+                            }
                         }
                         $update['session'] = '';
                     }
@@ -374,6 +535,9 @@ class Shopware_Controllers_Frontend_WirecardCheckoutSeamless extends Shopware_Co
      */
     public function returnAction()
     {
+        if(strlen($_SESSION["wcs_redirect_url"]))
+            unset($_SESSION["wcs_redirect_url"]);
+
         // Get data saved by wirecard callback
         $sql = Shopware()->Db()->select()
             ->from('wirecard_checkout_seamless')

@@ -139,366 +139,437 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Models_Config
     {
         return array(
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '1',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectHeader',
                 'value' => 'Weiterleitung'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '2',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectHeader',
                 'value' => 'Redirect'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '1',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectText',
                 'value' => 'Sie werden nun weitergeleitet.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '2',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectText',
                 'value' => 'You will be redirected in a moment.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '1',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectLinkText',
                 'value' => 'Falls Sie nicht weitergeleitet werden, klicken Sie bitte'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '2',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectLinkText',
                 'value' => 'If the redirect does not work please click'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '1',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectLink',
                 'value' => 'hier'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/return',
+                'namespace' => 'frontend/checkout/return',
                 'locale' => '2',
                 'name' => 'WirecardCheckoutSeamlessPaymentRedirectLink',
                 'value' => 'here'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardFinancialInstitutions',
                 'value' => 'Finanzinstitut'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardFinancialInstitutions',
                 'value' => 'Financial institution'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardCcardCardholdername',
                 'value' => 'Karteninhaber'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardCcardCardholdername',
                 'value' => 'Card holder name'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardCcardPAN',
                 'value' => 'Kartennummer'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardCcardPAN',
                 'value' => 'Card number'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardCcardSecurityCode',
                 'value' => 'Kartenpr&uuml;fnummer'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardCcardSecurityCode',
                 'value' => 'Card verification code'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardCcardExpiration',
                 'value' => 'Gültig bis'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardCcardExpiration',
                 'value' => 'Expiration date'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardCcardIssueNumber',
                 'value' => 'Ausgabenummer'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardCcardIssueNumber',
                 'value' => 'Issue number'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardCcardIssueMonth',
                 'value' => 'Ausgabedatum'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardCcardIssueMonth',
                 'value' => 'Issue date'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardPayboxNumber',
                 'value' => 'paybox-Nummer'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardPayboxNumber',
                 'value' => 'paybox number'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardELVBank',
                 'value' => 'Name der Bank'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardELVBank',
                 'value' => 'Bank name'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardELVCountry',
                 'value' => 'Land'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardELVCountry',
                 'value' => 'Country'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardELVBLZ',
                 'value' => 'Bankleitzahl'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardELVBLZ',
                 'value' => 'Bank sorting code'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardELVAccount',
                 'value' => 'Kontoinhaber'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardELVAccount',
                 'value' => 'Account owner'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardELVAccountNumber',
                 'value' => 'Kontonummer'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardELVAccountNumber',
                 'value' => 'Account number'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardSEPADDAccount',
                 'value' => 'Kontoinhaber'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardSEPADDAccount',
                 'value' => 'Account number'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardSEPADDIban',
                 'value' => 'IBAN'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardSEPADDIban',
                 'value' => 'IBAN'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardSEPADDBic',
                 'value' => 'BIC'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardSEPADDBic',
                 'value' => 'BIC'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard_seamless',
+                'namespace' => 'frontend/checkout/wirecard_seamless',
                 'locale' => '1',
                 'name' => 'WirecardCheckoutSeamlessPaymentHeader',
                 'value' => 'Bitte f&uuml;hren Sie nun die Zahlung durch.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard_seamless',
+                'namespace' => 'frontend/checkout/wirecard_seamless',
                 'locale' => '2',
                 'name' => 'WirecardCheckoutSeamlessPaymentHeader',
                 'value' => 'Please proceed with the payment process.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard_seamless',
+                'namespace' => 'frontend/checkout/wirecard_seamless',
                 'locale' => '1',
                 'name' => 'WirecardCheckoutSeamlessPaymentInfoWait',
                 'value' => 'Bitte warten ...'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard_seamless',
+                'namespace' => 'frontend/checkout/wirecard_seamless',
                 'locale' => '2',
                 'name' => 'WirecardCheckoutSeamlessPaymentInfoWait',
                 'value' => 'Please wait ...'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageActionCancel',
                 'value' => 'Der Bezahlprozess wurde abgebrochen.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageActionCancel',
                 'value' => 'The payment process has been canceled.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageActionUndefined',
                 'value' => 'Zeitüberschreitung während des Bezahlprozesses. Bitte versuchen Sie es erneut.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageActionUndefined',
                 'value' => 'A timeout occurred during the payment process. Please try again.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageActionFailure',
                 'value' => 'W&auml;hrend des Bezahlprozesses ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder w&auml;hlen Sie ein anderes Zahlungsmittel.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageActionFailure',
                 'value' => 'An error occurred during the payment process. Please try again or choose a different payment method.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageErrorInit',
                 'value' => 'W&auml;hrend der Initialisierung des Bezahlprozesses ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder w&auml;hlen Sie ein anderes Zahlungsmittel.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageErrorInit',
                 'value' => 'An error occurred during the initialization of the payment process. Please try again or choose a different payment method.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageErrorBankIdeal',
                 'value' => 'Bitte w&auml;hlen Sie Ihre Bank aus.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageErrorBankIdeal',
                 'value' => 'Please select your bank.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageErrorBankEPS',
                 'value' => 'Bitte w&auml;hlen Sie Ihre Bank aus.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageErrorBankEPS',
                 'value' => 'Please select your bank.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '1',
                 'name' => 'WirecardMessageNoPaymentdata',
                 'value' => 'Die Zahlungsinformation fehlt.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard',
+                'namespace' => 'frontend/checkout/wirecard',
                 'locale' => '2',
                 'name' => 'WirecardMessageNoPaymentdata',
                 'value' => 'Payment information is missing.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard_finish',
+                'namespace' => 'frontend/checkout/wirecard_finish',
                 'locale' => '1',
                 'name' => 'WirecardMessageActionPending',
                 'value' => 'Ihre Zahlung wurde vom Finanzinstitut noch nicht best&auml;tigt.'
             ),
             array(
-                'namespace' => 'engine/Shopware/Plugins/Community/Frontend/WirecardCheckoutSeamless/Views/frontend/checkout/wirecard_finish',
+                'namespace' => 'frontend/checkout/wirecard_finish',
                 'locale' => '2',
                 'name' => 'WirecardMessageActionPending',
                 'value' => 'Your financial institution has not yet approved your payment.'
             ),
-
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '1',
+                'name' => 'WirecardCheckoutSeamlessPayolutionTermsHeader',
+                'value' => 'Payolution Konditionen'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '2',
+                'name' => 'WirecardCheckoutSeamlessPayolutionTermsHeader',
+                'value' => 'Payolution Terms'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '1',
+                'name' => 'WirecardCheckoutSeamlessPayolutionConsent1',
+                'value' => 'Mit der Übermittlung jener Daten an payolution, die für die Abwicklung von Zahlungen mit Kauf auf Rechnung und die Identitäts- und Bonitätsprüfung erforderlich sind, bin ich einverstanden. Meine '
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '2',
+                'name' => 'WirecardCheckoutSeamlessPayolutionConsent1',
+                'value' => 'I agree that the data which are necessary for the liquidation of purchase on account and which are used to complete the identy and credit check are transmitted to payolution. My '
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '1',
+                'name' => 'WirecardCheckoutSeamlessPayolutionConsent2',
+                'value' => ' kann ich jederzeit mit Wirkung für die Zukunft widerrufen.'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '2',
+                'name' => 'WirecardCheckoutSeamlessPayolutionConsent2',
+                'value' => ' can be revoked at any time with effect for the future.'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '1',
+                'name' => 'WirecardCheckoutSeamlessPayolutionLink',
+                'value' => 'Bewilligung'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '2',
+                'name' => 'WirecardCheckoutSeamlessPayolutionLink',
+                'value' => 'consent'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '1',
+                'name' => 'WirecardCheckoutSeamlessBirthday',
+                'value' => 'Geburtsdatum'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '2',
+                'name' => 'WirecardCheckoutSeamlessBirthday',
+                'value' => 'Date of birth'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '1',
+                'name' => 'WirecardCheckoutSeamlessBirthdayInformation',
+                'value' => 'Sie müssen mindestens 18 Jahre alt sein, um dieses Zahlungsmittel nutzen zu können.'
+            ),
+            array(
+                'namespace' => 'frontend/WirecardCheckoutSeamless/payment',
+                'locale' => '2',
+                'name' => 'WirecardCheckoutSeamlessBirthdayInformation',
+                'value' => 'You must be at least 18 years of age to use this payment method.'
+            ),
         );
     }
 
@@ -536,166 +607,189 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Models_Config
         $pm[] = array(
             'name' => 'ccard',
             'description' => 'Kreditkarte',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::CCARD,
             'translation' => Array('description' => 'Wirecard Credit Card', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'maestro',
             'description' => 'Maestro SecureCode',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::CCARD,
             'translation' => Array('description' => 'Wirecard Maestro SecureCode', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'eps',
             'description' => 'eps Online-&Uuml;berweisung',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::EPS,
             'translation' => Array('description' => 'Wirecard eps Online Bank Transfer', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'ideal',
             'description' => 'iDEAL',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::IDL,
             'translation' => Array('description' => 'Wirecard iDEAL', 'additionalDescription' => '')
-
         );
         $pm[] = array(
             'name' => 'giropay',
             'description' => 'giropay',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::GIROPAY,
             'translation' => Array('description' => 'Wirecard giropay', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'sofortueberweisung',
             'description' => 'sofort&uuml;berweisung (PIN/TAN)',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::SOFORTUEBERWEISUNG,
             'translation' => Array('description' => 'Wirecard sofortbanking (PIN/TAN)', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'bancontact_mistercash',
             'description' => 'Bancontact/Mister Cash',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::BMC,
             'translation' => Array('description' => 'Wirecard Bancontact/Mister Cash', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'przelewy24',
             'description' => 'Przelewy24',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::P24,
             'translation' => Array('description' => 'Wirecard Przelewy24', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'moneta',
             'description' => 'moneta.ru',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::MONETA,
             'translation' => Array('description' => 'Wirecard moneta.ru', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'poli',
             'description' => 'POLi',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::POLI,
             'translation' => Array('description' => 'Wirecard POLi', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'pbx',
             'description' => 'paybox',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::PBX,
             'translation' => Array('description' => 'Wirecard paybox', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'psc',
             'description' => 'paysafecard / Cash-Ticket',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::PSC,
             'translation' => Array('description' => 'Wirecard paysafecard / Cash-Ticket', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'quick',
             'description' => '@Quick',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::QUICK,
             'translation' => Array('description' => 'Wirecard @Quick', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'paypal',
             'description' => 'PayPal',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::PAYPAL,
             'translation' => Array('description' => 'Wirecard PayPal', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'elv',
             'description' => 'Lastschriftverfahren',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::ELV,
             'translation' => Array('description' => 'Wirecard Direct Debit', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'sepa-dd',
             'description' => 'SEPA Lastschrift',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::SEPADD,
             'translation' => Array('description' => 'Wirecard SEPA Direct Debit', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'invoice',
             'description' => 'Rechnung',
+            'template' => 'wcs_invoice.tpl',
             'call' => WirecardCEE_QMore_PaymentType::INVOICE,
             'translation' => Array('description' => 'Wirecard Invoice', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'installment',
             'description' => 'Ratenzahlung',
+            'template' => 'wcs_installment.tpl',
             'call' => WirecardCEE_QMore_PaymentType::INSTALLMENT,
             'translation' => Array('description' => 'Wirecard Installment', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'mpass',
             'description' => 'mpass',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::MPASS,
             'translation' => Array('description' => 'Wirecard mpass', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'skrilldirect',
             'description' => 'Skrill Direct',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::SKRILLDIRECT,
             'translation' => Array('description' => 'Wirecard Skrill Direct', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'skrillwallet',
             'description' => 'Skrill Digital Wallet',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::SKRILLWALLET,
             'translation' => Array('description' => 'Wirecard Skrill Digital Wallet', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'ekonto',
             'description' => 'eKonto',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::EKONTO,
             'translation' => Array('description' => 'Wirecard eKonto', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'trustly',
             'description' => 'Trustly',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::TRUSTLY,
             'translation' => Array('description' => 'Wirecard Trustly', 'additionalDescription' => '')
         );
         $pm[] = array(
             'name' => 'ccard-moto',
             'description' => 'MOTO-Zahlungen',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::CCARD_MOTO,
             'translation' => Array('description' => 'Wirecard Credit Card MOTO', 'additionalDescription' => '')
         );
-
         $pm[] = array(
             'name' => 'tatrapay',
             'description' => 'TatraPay',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::TATRAPAY,
             'translation' => Array('description' => 'Wirecard TatraPay', 'additionalDescription' => '')
         );
-
         $pm[] = array(
             'name' => 'epay',
             'description' => 'ePay.bg',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::EPAYBG,
             'translation' => Array('description' => 'Wirecard ePay.bg', 'additionalDescription' => '')
         );
-
         $pm[] = array(
             'name' => 'voucher',
             'description' => 'Gutschein',
+            'template' => '',
             'call' => WirecardCEE_QMore_PaymentType::VOUCHER,
             'translation' => Array('description' => 'Wirecard Voucher', 'additionalDescription' => '')
         );
@@ -853,7 +947,7 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Models_Config
      */
     public function getShopName()
     {
-        return $this->SHOP_NAME;
+        return $this->SHOP_PREFIX;
     }
 
     /**

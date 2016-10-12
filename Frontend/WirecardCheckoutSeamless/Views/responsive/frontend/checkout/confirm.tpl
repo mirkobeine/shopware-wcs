@@ -1,7 +1,7 @@
+{namespace name='frontend/checkout/wirecard'}
 {extends file="parent:frontend/checkout/confirm.tpl"}
 
 {block name="frontend_index_header_javascript" append}
-
     {if $wirecardAdditional eq 'seamless'}
         <script type='text/javascript' src="{$wirecardJavascript}"></script>
     {/if}
@@ -9,6 +9,10 @@
         var wirecardDatastorageReadUrl = {$wirecardDatastorageReadUrl|json_encode};
         var noPaymentdataMessage = {$noPaymentdataMessage|json_encode};
         var agbErrorMessage = {$confirmErrorAGB|json_encode};
+        var oldShopVersion = false;
+        if({$oldShopVersion|json_encode}) {
+            oldShopVersion = {$oldShopVersion|json_encode};
+        }
     </script>
 {/block}
 

@@ -47,6 +47,16 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
      */
     const NAME = 'Shopware_5.WirecardCheckoutSeamless';
 
+    public function getCapabilities()
+    {
+        return array(
+            'install' => true,
+            'enable' => true,
+            'update' => true,
+            'secureUninstall' => true
+        );
+    }
+
     /**
      * Returns the version of plugin as string.
      *
@@ -54,7 +64,7 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
      */
     public function getVersion()
     {
-        return '1.7.11';
+        return '1.7.26';
     }
 
     /**
@@ -93,7 +103,6 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                                 . '<p>If you have no Wirecard account, please register yourself via ' . $copLink . '.</p></div>'
         );
     }
-
 
     /**
      * @return bool
@@ -140,6 +149,26 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
     }
 
     /**
+     * This derived method is called automatically each time the plugin will be reinstalled
+     * (does not delete databases)
+     *
+     * @return array
+     */
+    public function secureUninstall()
+    {
+        if ($this->assertMinimumVersion('5')) {
+            /** @var \Shopware\Components\CacheManager $cacheManager */
+            $cacheManager = $this->get('shopware.cache_manager');
+            $cacheManager->clearThemeCache();
+        }
+
+        return array(
+            'success' => true,
+            'invalidateCache' => array('frontend', 'config', 'template', 'theme')
+        );
+    }
+
+    /**
      * This derived method is called automatically each time the plugin will be uninstalled
      *
      * @return bool
@@ -158,16 +187,8 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
             );
         }
 
-        if ($this->assertMinimumVersion('5')) {
-            /** @var \Shopware\Components\CacheManager $cacheManager */
-            $cacheManager = $this->get('shopware.cache_manager');
-            $cacheManager->clearThemeCache();
-        }
+        return $this->secureUninstall();
 
-        return array(
-            'success' => true,
-            'invalidateCache' => array('frontend', 'config', 'template', 'theme')
-        );
     }
 
     public function update($version)
@@ -264,6 +285,32 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
 
         $form->setElement(
             'checkbox',
+            'PAYOLUTION_TERMS',
+            array(
+                'label' => 'Payolution Kondition',
+                'value' => 1,
+                'description' => 'Anzeige der Checkbox mit den payolution-Bedingungen, die vom Kunden während des Bezahlprozesses bestätigt werden müssen, wenn Ihr Onlineshop als "Trusted Shop" zertifiziert ist.',
+                'scope' => \Shopware\Models\Config\Element::SCOPE_SHOP,
+                'required' => false,
+                'order' => ++$i
+            )
+        );
+
+        $form->setElement(
+            'text',
+            'PAYOLUTION_MID',
+            array(
+                'label' => 'Payolution mID',
+                'value' => '',
+                'description' => 'payolution-Händler-ID, bestehend aus dem Base64-enkodierten Firmennamen, die für den Link "Einwilligen" gesetzt werden kann.',
+                'scope' => \Shopware\Models\Config\Element::SCOPE_SHOP,
+                'required' => false,
+                'order' => ++$i
+            )
+        );
+
+        $form->setElement(
+            'checkbox',
             'PCI3_DSS_SAQ_A_ENABLE',
             array(
                 'label' => 'SAQ A konform',
@@ -354,7 +401,7 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
 
         $form->setElement(
             'text',
-            'SHOP_NAME',
+            'SHOP_PREFIX',
             array(
                 'label' => 'Shop-Präfix im Buchungstext',
                 'value' => '',
@@ -460,6 +507,49 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                 'order' => ++$i
             )
         );
+
+        $form->setElement(
+            'select',
+            'WIRECARD_CONFIRM_HEADER_STYLE',
+            array(
+                'label' => 'Headerstyle',
+                'value' => 1,
+                'store' => array(
+                    array(1, 'Fat'),
+                    array(2, 'Slim'),
+                ),
+                'description' => 'Style des Header beim letzten Schritt in der Bezahlung.',
+                'scope' => \Shopware\Models\Config\Element::SCOPE_SHOP,
+                'required' => false,
+                'order' => ++$i
+            )
+        );
+
+        $form->setElement(
+            'checkbox',
+            'SEND_PENDING_MAILS',
+            array(
+                'label' => 'Mail für Pendingstatus versenden',
+                'value' => 0,
+                'description' => 'Falls "Ja" gesetzt ist, werden Mails zu noch nicht bestätigten Zahlungen verschickt.',
+                'scope' => \Shopware\Models\Config\Element::SCOPE_SHOP,
+                'required' => false,
+                'order' => ++$i
+            )
+        );
+
+        $form->setElement(
+            'checkbox',
+            'ENABLE_DUPLICATE_REQUEST_CHECK',
+            array(
+                'label' => 'Überprüfung auf doppelte Anfragen',
+                'value' => 0,
+                'description' => 'Überprüfung auf mehrfache Anfragen seitens Ihres Kunden.',
+                'scope' => \Shopware\Models\Config\Element::SCOPE_SHOP,
+                'required' => false,
+                'order' => ++$i
+            )
+        );
     }
 
     /**
@@ -498,6 +588,14 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                     'label' => 'Notification e-mail',
                     'description' => 'Receiving notification by e-mail regarding the orders of your consumers if an error occurred in the communication between Wirecard and your online shop. Please contact our sales teams to activate this feature.'
                 ),
+                'PAYOLUTION_TERMS' => Array(
+                    'label' => 'Payolution terms',
+                    'description' => 'If your online shop is certified by "Trusted Shops", display the corresponding checkbox with payolution terms for the consumer to agree with during the checkout process.'
+                ),
+                'PAYOLUTION_MID' => Array(
+                    'label' => 'Payolution mID',
+                    'description' => 'Your payolution merchant ID consisting of the base64-encoded company name which is used in the link for "consent" to the payolution terms.'
+                ),
                 'PCI3_DSS_SAQ_A_ENABLE'       => Array(
                     'label'       => 'SAQ A compliance',
                     'description' => 'Selecting "No", the stringent SAQ A-EP is applicable. Selecting "Yes", Wirecard Checkout Seamless is integrated with the "PCI DSS SAQ A Compliance" feature and SAQ A is applicable.'
@@ -526,7 +624,7 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                     'label' => 'Automated deposit',
                     'description' => 'Enabling an automated deposit of payments. Please contact our sales teams to activate this feature.'
                 ),
-                'SHOP_NAME' => Array(
+                'SHOP_PREFIX' => Array(
                     'label' => 'Shop prefix in posting text',
                     'description' => 'Reference to your online shop on your consumer\'s invoice, limited to 9 characters (used together with the order number to create the parameter customerStatement).'
                 ),
@@ -549,6 +647,18 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                 'KEEP_UNSUCCESSFUL_ORDERS' => Array(
                     'label' => 'Keep orders despite of failed payment',
                     'description' => 'Selecting "Yes", pending orders will remain in the order list even if payment fails. Selecting "No", they are deleted. Note that deleted orders are missing in the order number sequence.'
+                ),
+                'WIRECARD_CONFIRM_HEADER_STYLE' => Array(
+                    'label' => 'Header style',
+                    'description' => 'Style of header within the last step in payment process.'
+                ),
+                'SEND_PENDING_MAILS' => Array(
+                    'label' => 'Send Pendingstate mails',
+                    'description' => 'Selecting "Yes", mails will be sent for pending orders'
+                ),
+                'ENABLE_DUPLICATE_REQUEST_CHECK' => Array(
+                    'label' => 'Check for duplicate requests',
+                    'description' => 'Checking duplicate requests made by your consumer.'
                 )
             )
         );
@@ -603,18 +713,10 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
             'onPreDispatch'
         );
 
-        // Check while listing payment methods
         $this->subscribeEvent(
-            'sAdmin::sManageRisks::after',
-            'wRiskWirecardCheckoutSeamless',
-            0
+            'Shopware_Controllers_Backend_OrderState_Notify',
+            'sendStateNotify'
         );
-
-        // not used, order email could be suppressed
-//        $this->subscribeEvent(
-//            'Shopware_Modules_Order_SendMail_Send',
-//            'sendOrderEmail'
-//        );
 
         // Cronjob: delete old log files
         $this->subscribeEvent('WirecardCEEDeleteLog', 'onRun');
@@ -633,6 +735,13 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
             'Theme_Compiler_Collect_Plugin_Javascript',
             'addJsFiles'
         );
+
+        // Prevent ordermail after pending
+        $this->subscribeEvent(
+            'Shopware_Modules_Order_SendMail_Send',
+            'defineSending'
+        );
+
     }
 
     /**
@@ -689,18 +798,25 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
         foreach (Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Models_Config::getSingleton()->getPaymentMethods() as $pos => $pm) {
             $oPayment = $this->Payments()->findOneBy(array('name' => $prefixName . $pm['name']));
             if(!$oPayment) {
-                $oPayment = $this->createPayment(
-                    array(
-                        'name' => $prefixName . $pm['name'],
-                        'description' => $prefixDescription . $pm['description'],
-                        'action' => self::CONTROLLER,
-                        'active' => (isset($pm['active'])) ? (int)$pm['active'] : 0,
-                        'position' => self::STARTPOSITION + $pos,
-                        'pluginID' => $this->getId(),
-                        'additionalDescription' => ''
-                    )
+                $payment = array(
+                    'name' => $prefixName . $pm['name'],
+                    'description' => $prefixDescription . $pm['description'],
+                    'action' => self::CONTROLLER,
+                    'active' => (isset($pm['active'])) ? (int)$pm['active'] : 0,
+                    'position' => self::STARTPOSITION + $pos,
+                    'pluginID' => $this->getId(),
+                    'additionalDescription' => ''
                 );
+                if (isset($pm['template']) && !is_null($pm['template'])) {
+                    $payment['template'] = $pm['template'];
+                }
+                $oPayment = $this->createPayment($payment);
+            } else {
+                if (isset($pm['template']) && !is_null($pm['template'])) {
+                    $oPayment->setTemplate($pm['template']);
+                }
             }
+
             $aTranslations[$oPayment->getId()] = $pm['translation'];
         }
         $translation->write(2, 'config_payment', 1, $aTranslations,0);
@@ -754,48 +870,39 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
         return dirname(__FILE__) . '/Controllers/Frontend/' . self::CONTROLLER . '.php';
     }
 
-
     /**
-     * Riskmanagement: Don't show payment type invoice if
-     * shipping and billing address are different or the customer
-     * not to be of legal age
-     * The payment method is displayed if return value is TRUE
+     * return encoded mId for PayolutionLink
      *
-     * @param Enlight_Hook_HookArgs $args
-     *
-     * @return bool
+     * @return string
      */
-    public function wRiskWirecardCheckoutSeamless(Enlight_Hook_HookArgs $args)
+    public function getPayolutionLink()
     {
-        if ($args->getReturn() == true) {
-            return true;
-        } else {
-            self::init();
-            $parameter = $args->getArgs();
-            $payment = Shopware()->WirecardCheckoutSeamless()->Config()->getPaymentMethodName($parameter[0]);
-            if (0 == strcmp($payment, 'wirecard_invoice') || 0 == strcmp($payment, 'wirecard_installment')) {
-                // Looking for user data
-                $user = Shopware()->Session()->sOrderVariables['sUserData'];
-                if (is_null($user)
-                  || !isset($user['billingaddress']['birthday']) // No birthday given
-                ) {
-                    return true;
-                }
-
-                // is birthday a valid date
-                $date = explode("-", $user['billingaddress']['birthday']);
-                if (false === checkdate($date[1], $date[2], $date[0])) {
-                    return true;
-                }
-                // Is customer to be of legal age
-                if ((time() - strtotime($user['billingaddress']['birthday'] . ' +18 years')) < 0) {
-                    return true;
-                }
-            }
+        $mid = Shopware()->WirecardCheckoutSeamless()->Config()->PAYOLUTION_MID;
+        if (strlen($mid) === 0) {
+            return false;
         }
-        return false;
+
+        $mId = urlencode(base64_encode($mid));
+
+        return $mId;
     }
 
+    /**
+     * set confirmmail after ordercreation false (only for WirecardCheckoutSeamless)
+     * @param Enlight_Event_EventArgs $args
+     * @return bool
+     */
+    public function defineSending(Enlight_Event_EventArgs $args)
+    {
+        $userData = Shopware()->Session()->sOrderVariables['sUserData'];
+        $additional = $userData['additional'];
+        $paymentaction = $additional['payment']['action'];
+
+        //only prevent confirmationmail for WirecardCheckoutSeamless payment action
+        if($paymentaction == 'WirecardCheckoutSeamless') {
+            return false;
+        }
+    }
 
     /**
      * Display additional data for seamless payment methods and
@@ -825,6 +932,51 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
 
         switch($args->getSubject()->Request()->getActionName())
         {
+            case 'shippingPayment':
+                self::init();
+
+                $view->addTemplateDir($this->Path() . 'Views/common/');
+                if (Shopware()->Shop()->getTemplate()->getVersion() >= 3) {
+                    $view->addTemplateDir($this->Path() . 'Views/responsive/');
+                } else {
+                    $view->addTemplateDir($this->Path() . 'Views/');
+                    $view->extendsTemplate('frontend/checkout/wirecard.tpl');
+                }
+
+                $view->wcsPayolutionTerms = Shopware()->WirecardCheckoutSeamless()->Config()->PAYOLUTION_TERMS;
+
+                if ($this->getPayolutionLink()) {
+                    $view->wcsPayolutionLink1 = '<a id="wcs-payolutionlink" href="https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=' . $this->getPayolutionLink() . '" target="_blank">';
+                    $view->wcsPayolutionLink2 = '</a>';
+                }
+
+                $view->years = range(date('Y'), date('Y') - 100);
+                $view->days = range(1, 31);
+                $view->months = range(1, 12);
+
+                $user = Shopware()->Session()->sOrderVariables['sUserData'];
+                $birth = null;
+
+                if ($this->assertMinimumVersion('5.2')) {
+                    if(!is_null($user) && isset($user['additional']['user']['birthday'])) {
+                        $birth = $user['additional']['user']['birthday'];
+                    }
+                } else {
+                    if(!is_null($user) && isset($user['billingaddress']['birthday'])) {
+                        $birth = $user['billingaddress']['birthday'];
+                    }
+                }
+
+                $birthday = array('-', '-', '-');
+                if ($birth != null) {
+                    $birthday = explode('-', $birth);
+                }
+
+                $view->bYear = $birthday[0];
+                $view->bMonth = $birthday[1];
+                $view->bDay = $birthday[2];
+
+                break;
             case 'confirm':
                 self::init();
 
@@ -854,6 +1006,12 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                 }
 
                     Shopware()->WirecardCheckoutSeamless()->storageId = Shopware()->WirecardCheckoutSeamless()->Datastorage()->getStorageId();
+                }
+
+                $view->oldShopVersion = false;
+
+                if (!$this->assertMinimumVersion('5')) {
+                    $view->oldShopVersion = true;
                 }
 
                 $view->paymentTypeName = Shopware()->WirecardCheckoutSeamless()->getPaymentShortName();
@@ -912,6 +1070,9 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
 
             case 'finish':
                 self::init();
+                $variables = Shopware()->Session()->offsetGet('sOrderVariables');
+                $confirmMailFailed = false;
+                $confirmMailFailed = $variables['confirmMailDeliveryFailed'];
                 $view->addTemplateDir($this->Path() . 'Views/common/');
                 if (Shopware()->Shop()->getTemplate()->getVersion() >= 3) {
                     $view->addTemplateDir($this->Path() . 'Views/responsive/');
@@ -921,6 +1082,7 @@ class Shopware_Plugins_Frontend_WirecardCheckoutSeamless_Bootstrap extends Shopw
                 }
 
                 $view->pendingPayment = $args->getSubject()->Request()->get('pending');
+                $view->confirmMailFailed = $confirmMailFailed;
                 break;
             default:
                 return;
